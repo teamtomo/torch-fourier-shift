@@ -1,0 +1,12 @@
+# Do not edit - changes here will be overwritten by Copier
+_commit: v1
+_src_path: gh:pydev-guide/pyrepo-copier
+author_email: alisterburt@gmail.com
+author_name: Alister Burt
+github_username: alisterburt
+mode: tooling
+module_name: torch_phase_shift
+project_name: torch-phase-shift
+project_short_description: Translate images by phase shifting Fourier transforms in
+    PyTorch
+
