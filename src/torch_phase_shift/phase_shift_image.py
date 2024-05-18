@@ -16,7 +16,7 @@ def phase_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
     Returns
     -------
     shifted_images: torch.Tensor
-        `(..., h, w)` array of DFTs with phase shifts applied.
+        `(..., h, w)` array of shifted images.
     """
     h, w = image.shape[-2:]
     image = torch.fft.rfftn(image, dim=(-2, -1))
@@ -43,8 +43,8 @@ def phase_shift_image_3d(image: torch.Tensor, shifts: torch.Tensor):
 
     Returns
     -------
-    shifted_images: torch.Tensor
-        `(..., d, h, w)` array of DFTs with phase shifts applied.
+    shifted_image: torch.Tensor
+        `(..., d, h, w)` array of shifted images.
     """
     d, h, w = image.shape[-3:]
     image = torch.fft.rfftn(image, dim=(-3, -2, -1))
