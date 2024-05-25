@@ -9,8 +9,8 @@
 *torch-fourier-shift* is a package for shifting 2D and 3D images with subpixel precision 
 by applying phase shifts to Fourier transforms in PyTorch.
 
-<figure markdown>
-  ![A very simple example](./assets/shift_2d_image.png){ width="500" }
+<figure>
+  <img src="./docs/assets/shift_2d_image.png" alt="A very simple example" width="500">
   <figcaption>Shifting a 2D image with torch-fourier-shift</figcaption>
 </figure>
 
