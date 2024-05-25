@@ -5,7 +5,7 @@ from typing import Sequence
 import einops
 import torch
 
-from torch_phase_shift.dft_utils import rfft_shape
+from torch_fourier_shift.dft_utils import rfft_shape
 
 
 def fftfreq_grid_2d(

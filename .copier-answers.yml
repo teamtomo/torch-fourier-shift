@@ -5,7 +5,7 @@ author_email: alisterburt@gmail.com
 author_name: Alister Burt
 github_username: alisterburt
 mode: tooling
-module_name: torch_phase_shift
+module_name: torch_fourier_shift
 project_name: torch-phase-shift
 project_short_description: Translate images by phase shifting Fourier transforms in
     PyTorch

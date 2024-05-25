@@ -3,7 +3,7 @@ import torch
 from .phase_shift_grids import phase_shift_grid_2d, phase_shift_grid_3d
 
 
-def phase_shift_dft_2d(
+def fourier_shift_dft_2d(
     dft: torch.Tensor,
     image_shape: tuple[int, int],
     shifts: torch.Tensor,
@@ -39,7 +39,7 @@ def phase_shift_dft_2d(
     return dft * phase_shifts
 
 
-def phase_shift_dft_3d(
+def fourier_shift_dft_3d(
     dft: torch.Tensor,
     image_shape: tuple[int, int, int],
     shifts: torch.Tensor,

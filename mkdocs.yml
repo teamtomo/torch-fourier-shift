@@ -1,0 +1,76 @@
+site_name: teamtomo/torch-fourier-shift
+site_url: https://teamtomo.org/torch-fourier-shift
+site_author: teamtomo
+site_description: >-
+  Documentation for torch-fourier-shift
+repo_name: teamtomo/torch-fourier-shift
+repo_url: https://github.com/teamtomo/torch-fourier-shift
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2024 - 2024 teamtomo
+
+
+# Custom navigation can be specified
+nav:
+  - Overview: index.md
+  - I want to:
+      - Shift 2D Image(s): examples/shift_image_2d.md
+      - Shift 3D Image(s): examples/shift_image_3d.md
+      - Shift 2D Fourier Transform(s): examples/shift_dft_2d.md
+      - Shift 3D Fourier Transform(s): examples/shift_dft_3d.md
+
+
+theme:
+  icon:
+    logo: material/cube-outline
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+
+  features:
+    - navigation.instant
+    - navigation.expand
+    - search.highlight
+    - search.suggest
+    - content.tabs.link
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://numpy.org/doc/stable/objects.inv
+          options:
+            show_root_heading: true # default is false
+            docstring_style: "numpy"
+            line_length: 50 # default is 60
+            # show_if_no_docstring: true # default is false
+            # show_signature: false  # default is true
+            show_signature_annotations: true # default is false
+            annotations_path: "source" # default is 'brief'
+            show_bases: false # default is true
+            show_source: true # default is true
+            docstring_section_style: table
+            merge_init_into_class: true

@@ -1,9 +1,9 @@
 import torch
 
-from .phase_shift_dft import phase_shift_dft_2d, phase_shift_dft_3d
+from .fourier_shift_dft import fourier_shift_dft_2d, fourier_shift_dft_3d
 
 
-def phase_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
+def fourier_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
     """Translate one or more 2D images by phase shifting their Fourier transforms.
 
     Parameters
@@ -20,7 +20,7 @@ def phase_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
     """
     h, w = image.shape[-2:]
     image = torch.fft.rfftn(image, dim=(-2, -1))
-    image = phase_shift_dft_2d(
+    image = fourier_shift_dft_2d(
         image,
         image_shape=(h, w),
         shifts=shifts,
@@ -31,15 +31,15 @@ def phase_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
     return torch.real(image)
 
 
-def phase_shift_image_3d(image: torch.Tensor, shifts: torch.Tensor):
+def fourier_shift_image_3d(image: torch.Tensor, shifts: torch.Tensor):
     """Translate one or more 3D images by phase shifting their Fourier transforms.
 
     Parameters
     ----------
     image: torch.Tensor
-        `(..., h, w)` image(s).
+        `(..., d, h, w)` image(s).
     shifts: torch.Tensor
-        `(..., 3)` array of 2D shifts in `d`, `h` and `w`.
+        `(..., 3)` array of 3D shifts in `d`, `h` and `w`.
 
     Returns
     -------
@@ -48,7 +48,7 @@ def phase_shift_image_3d(image: torch.Tensor, shifts: torch.Tensor):
     """
     d, h, w = image.shape[-3:]
     image = torch.fft.rfftn(image, dim=(-3, -2, -1))
-    image = phase_shift_dft_3d(
+    image = fourier_shift_dft_3d(
         image,
         image_shape=(d, h, w),
         shifts=shifts,

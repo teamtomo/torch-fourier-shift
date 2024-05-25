@@ -1,7 +1,7 @@
 import torch
 
-from torch_phase_shift import phase_shift_image_2d
-from torch_phase_shift.phase_shift_grids import phase_shift_grid_2d
+from torch_fourier_shift import fourier_shift_image_2d
+from torch_fourier_shift.phase_shift_grids import phase_shift_grid_2d
 
 
 def test_get_phase_shifts_2d_full_fft():
@@ -36,7 +36,7 @@ def test_phase_shift_images_2d():
 
     # +1px in each dimension
     shifts = torch.ones((1, 2))
-    shifted = phase_shift_image_2d(image, shifts)
+    shifted = fourier_shift_image_2d(image, shifts)
     expected = torch.zeros((4, 4))
     expected[3, 3] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
@@ -44,7 +44,7 @@ def test_phase_shift_images_2d():
     # +1px in y
     shifts = torch.zeros((1, 2))
     shifts[0, 0] = 1
-    shifted = phase_shift_image_2d(image, shifts)
+    shifted = fourier_shift_image_2d(image, shifts)
     expected = torch.zeros((4, 4))
     expected[3, 2] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
@@ -52,7 +52,7 @@ def test_phase_shift_images_2d():
     # +1px in x
     shifts = torch.zeros((1, 2))
     shifts[0, 1] = 1
-    shifted = phase_shift_image_2d(image, shifts)
+    shifted = fourier_shift_image_2d(image, shifts)
     expected = torch.zeros((4, 4))
     expected[2, 3] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)

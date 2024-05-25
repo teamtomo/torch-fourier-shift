@@ -15,9 +15,9 @@ sources = ["src"]
 
 # https://peps.python.org/pep-0621/
 [project]
-name = "torch-phase-shift"
+name = "torch-fourier-shift"
 dynamic = ["version"]
-description = "Translate images by phase shifting Fourier transforms in PyTorch"
+description = "Shift 2D/3D images by phase shifting Fourier transforms in PyTorch"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "BSD-3-Clause" }
@@ -54,6 +54,10 @@ dev = [
     "rich",  # https://github.com/Textualize/rich
     "ruff",
 ]
+docs = [
+    "mkdocs-material",
+    "mkdocstrings[python]"
+]
 
 [project.urls]
 homepage = "https://github.com/alisterburt/torch-phase-shift"
@@ -63,10 +67,10 @@ repository = "https://github.com/alisterburt/torch-phase-shift"
 # https://peps.python.org/pep-0621/#entry-points
 # same as console_scripts entry point
 # [project.scripts]
-# torch-phase-shift-cli = "torch_phase_shift:main_cli"
+# torch-phase-shift-cli = "torch_fourier_shift:main_cli"
 
 # [project.entry-points."some.group"]
-# tomatoes = "torch_phase_shift:main_tomatoes"
+# tomatoes = "torch_fourier_shift:main_tomatoes"
 
 # https://docs.astral.sh/ruff
 [tool.ruff]
