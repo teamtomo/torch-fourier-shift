@@ -7,7 +7,6 @@ from .fftfreq_grids import fftfreq_grid_2d, fftfreq_grid_3d
 from .dft_utils import fftshift_2d, fftshift_3d
 
 
-@lru_cache(maxsize=2)
 def phase_shift_grid_2d(
     shifts: torch.Tensor,
     image_shape: tuple[int, int],
@@ -48,7 +47,6 @@ def phase_shift_grid_2d(
     return phase_shifts
 
 
-@lru_cache(maxsize=2)
 def phase_shift_grid_3d(
     shifts: torch.Tensor,
     image_shape: tuple[int, int, int],
