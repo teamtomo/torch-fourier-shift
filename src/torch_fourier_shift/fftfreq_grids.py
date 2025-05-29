@@ -7,6 +7,36 @@ import torch
 
 from torch_fourier_shift.dft_utils import rfft_shape
 
+def fftfreq_grid_1d(
+    image_shape: tuple[int],
+    rfft: bool,
+    spacing: float = 1,
+    device: torch.device = None
+) -> torch.Tensor:
+    """Construct a grid of DFT sample freqs for a 1D image.
+
+    Parameters
+    ----------
+    image_shape: int
+        A 1D shape `(w, )` of the input image for which a grid of DFT sample freqs
+        should be calculated.
+    rfft: bool
+        Whether the frequency grid is for a real fft (rfft).
+    spacing: float
+        Sample spacing in `w` dimension of the grid.
+    device: torch.device
+        Torch device for the resulting grid.
+
+    Returns
+    -------
+    frequency_grid: torch.Tensor
+        `(w, )` array of DFT sample frequencies.
+    """
+    dw = spacing
+    frequency_func = torch.fft.rfftfreq if rfft is True else torch.fft.fftfreq
+    (w, ) = image_shape
+    freq_x = frequency_func(w, d=dw, device=device)
+    return freq_x
 
 def fftfreq_grid_2d(
     image_shape: tuple[int, int],

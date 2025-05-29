@@ -6,7 +6,7 @@
 [![CI](https://github.com/alisterburt/torch-phase-shift/actions/workflows/ci.yml/badge.svg)](https://github.com/alisterburt/torch-phase-shift/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/alisterburt/torch-phase-shift/branch/main/graph/badge.svg)](https://codecov.io/gh/alisterburt/torch-phase-shift)
 
-*torch-fourier-shift* is a package for shifting 2D and 3D images with subpixel precision 
+*torch-fourier-shift* is a package for shifting 1D, 2D and 3D images with subpixel precision 
 by applying phase shifts to Fourier transforms in PyTorch.
 
 <p align="center" width="100%">
@@ -30,6 +30,8 @@ my_image = torch.tensor(
 # shift the image by 1 pixel in dim 0, 2 pixels in dim 1
 shifted_image = fourier_shift_image_2d(image=my_image, shifts=torch.tensor([1, 2]))
 ```
+
+API's are equivalent for 1D and 3D images.
 
 ## Installation
 

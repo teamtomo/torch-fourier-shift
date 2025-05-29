@@ -34,7 +34,7 @@ def test_get_phase_shifts_3d_rfft():
     assert torch.allclose(phase_shifts, expected)
 
 
-def test_phase_shift_images_3d():
+def test_fourier_shift_image_3d():
     image = torch.zeros((4, 4, 4))
     image[2, 2, 2] = 1
 
