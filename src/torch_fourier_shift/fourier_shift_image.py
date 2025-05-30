@@ -1,6 +1,38 @@
 import torch
 
-from .fourier_shift_dft import fourier_shift_dft_2d, fourier_shift_dft_3d
+from torch_fourier_shift.fourier_shift_dft import (
+    fourier_shift_dft_1d,
+    fourier_shift_dft_2d,
+    fourier_shift_dft_3d,
+)
+
+
+def fourier_shift_image_1d(image: torch.Tensor, shifts: torch.Tensor):
+    """Translate one or more 1D images by phase shifting their Fourier transforms.
+
+    Parameters
+    ----------
+    image: torch.Tensor
+        `(..., w)` image(s).
+    shifts: torch.Tensor
+        `(..., )` array of 1D shifts in `w`.
+
+    Returns
+    -------
+    shifted_images: torch.Tensor
+        `(..., w)` array of shifted images.
+    """
+    w = image.shape[-1]
+    image = torch.fft.rfftn(image, dim=(-1, ))
+    image = fourier_shift_dft_1d(
+        image,
+        image_shape=(w, ),
+        shifts=shifts,
+        rfft=True,
+        fftshifted=False
+    )
+    image = torch.fft.irfftn(image, dim=(-1, ))
+    return torch.real(image)
 
 
 def fourier_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor):
