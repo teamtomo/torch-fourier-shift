@@ -56,3 +56,13 @@ def test_fourier_shift_image_2d():
     expected = torch.zeros((4, 4))
     expected[2, 3] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
+
+
+def test_fourier_shift_preserves_dimensions_2d():
+    """Test that fourier_shift_image_1d preserves input dimensions."""
+    image_2d_odd = torch.randn((127, 127))
+    shifts = torch.tensor((5.0, 5.0))
+    shifted_2d_odd = fourier_shift_image_2d(image_2d_odd, shifts)
+    assert shifted_2d_odd.shape == image_2d_odd.shape, (
+        f"2D odd: Expected {image_2d_odd.shape}, got {shifted_2d_odd.shape}"
+    )
