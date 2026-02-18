@@ -31,20 +31,29 @@ def test_get_phase_shifts_1d_rfft():
 
 
 def test_fourier_shift_image_1d():
-    image = torch.zeros((4, ))
+    image = torch.zeros((4,))
     image[2] = 1
 
     # +1px
-    shifts = torch.ones((1, ))
+    shifts = torch.ones((1,))
     shifted = fourier_shift_image_1d(image, shifts)
-    expected = torch.zeros((4, ))
+    expected = torch.zeros((4,))
     expected[3] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
 
     # -1px
-    shifts = -1 * torch.ones((1, ))
+    shifts = -1 * torch.ones((1,))
     shifted = fourier_shift_image_1d(image, shifts)
-    expected = torch.zeros((4, ))
+    expected = torch.zeros((4,))
     expected[1] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
 
+
+def test_fourier_shift_preserves_dimensions_1d():
+    """Test that fourier_shift_image_1d preserves input dimensions."""
+    image_1d_odd = torch.randn(127)
+    shifts = torch.tensor(5.0)
+    shifted_1d_odd = fourier_shift_image_1d(image_1d_odd, shifts)
+    assert shifted_1d_odd.shape == image_1d_odd.shape, (
+        f"1D odd: Expected {image_1d_odd.shape}, got {shifted_1d_odd.shape}"
+    )
