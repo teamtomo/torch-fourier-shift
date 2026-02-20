@@ -555,7 +555,7 @@
 
 
 <h2 id="torch_fourier_shift.fourier_shift_dft_2d" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">torch_fourier_shift</span><span class="o">.</span><span class="n">fourier_shift_dft_2d</span><span class="p">(</span><span class="n">dft</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">shifts</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">rfft</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">fftshifted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">torch_fourier_shift</span><span class="o">.</span><span class="n">fourier_shift_dft_2d</span><span class="p">(</span><span class="n">dft</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">shifts</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">rfft</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">fftshifted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cache_intermediates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span></code>
 
 </h2>
 
@@ -656,6 +656,22 @@
                 <em>required</em>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>cache_intermediates</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -685,11 +701,7 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/torch_fourier_shift/fourier_shift_dft.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
@@ -718,12 +730,21 @@
 <span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
-<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fourier_shift_dft_2d</span><span class="p">(</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fourier_shift_dft_2d</span><span class="p">(</span>
     <span class="n">dft</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
     <span class="n">shifts</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
     <span class="n">rfft</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">fftshifted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">cache_intermediates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply phase shifts to 2D discrete Fourier transforms.</span>
 
@@ -739,6 +760,8 @@
 <span class="sd">        Whether the input was computed using `rfft`.</span>
 <span class="sd">    fftshifted: bool</span>
 <span class="sd">        Whether the DFTs have been fftshifted to center the DC component.</span>
+<span class="sd">    cache_intermediates: bool</span>
+<span class="sd">        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -750,6 +773,7 @@
         <span class="n">image_shape</span><span class="o">=</span><span class="n">image_shape</span><span class="p">,</span>
         <span class="n">rfft</span><span class="o">=</span><span class="n">rfft</span><span class="p">,</span>
         <span class="n">fftshift</span><span class="o">=</span><span class="n">fftshifted</span><span class="p">,</span>
+        <span class="n">cache_intermediates</span><span class="o">=</span><span class="n">cache_intermediates</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">dft</span> <span class="o">*</span> <span class="n">phase_shifts</span>
 </code></pre></div></td></tr></table></div>
