@@ -30,7 +30,7 @@ def fourier_shift_dft_1d(
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
     cache_intermediates: bool
-        If `True`, the fftfreq_grid is cached
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
 
     Returns
     -------
@@ -70,7 +70,7 @@ def fourier_shift_dft_2d(
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
     cache_intermediates: bool
-        If `True`, the fftfreq_grid is cached
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
 
     Returns
     -------
@@ -110,7 +110,7 @@ def fourier_shift_dft_3d(
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
     cache_intermediates: bool
-        If `True`, the fftfreq_grid is cached
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
         
     Returns
     -------
