@@ -47,6 +47,8 @@ def test_fourier_shift_image_1d():
     expected = torch.zeros((4,))
     expected[1] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
+    
+
 
 
 def test_fourier_shift_preserves_dimensions_1d():

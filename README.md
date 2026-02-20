@@ -45,5 +45,20 @@ pip install torch-fourier-shift
 
 Please check the the docs at [teamtomo.org/torch-fourier-shift](https://teamtomo.org/torch-fourier-shift/)
 
+### Caching
 
+Some functions are equipped with an argument called cache_intermediates. If you set cache_intermediates=True, an LRU cache will be used to avoid recomputing intermediate results. Note that this might affect gradient calculations.
+
+By default, the size of the cache is 3, and can be changed with an environmental variable called TORCH_FOURIER_SHIFT_CACHE_SIZE. Just do 
+```
+export TORCH_FOURIER_SHIFT_CACHE_SIZE=5
+```
+
+or
+
+
+```
+os.environ["TORCH_FOURIER_SHIFT_CACHE_SIZE"]=5
+```
+before importing the torch_fourier_shift module.
 

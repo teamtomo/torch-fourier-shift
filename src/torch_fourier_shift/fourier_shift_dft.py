@@ -13,6 +13,7 @@ def fourier_shift_dft_1d(
     shifts: torch.Tensor,
     rfft: bool,
     fftshifted: bool,
+    cache_intermediates: bool = False,
 ):
     """Apply phase shifts to 2D discrete Fourier transforms.
 
@@ -28,6 +29,8 @@ def fourier_shift_dft_1d(
         Whether the input was computed using `rfft`.
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
+    cache_intermediates: bool
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
 
     Returns
     -------
@@ -39,6 +42,7 @@ def fourier_shift_dft_1d(
         image_shape=image_shape,
         rfft=rfft,
         fftshift=fftshifted,
+        cache_intermediates=cache_intermediates,
     )
     return dft * phase_shifts
 
@@ -49,6 +53,7 @@ def fourier_shift_dft_2d(
     shifts: torch.Tensor,
     rfft: bool,
     fftshifted: bool,
+    cache_intermediates: bool = False,
 ):
     """Apply phase shifts to 2D discrete Fourier transforms.
 
@@ -64,6 +69,8 @@ def fourier_shift_dft_2d(
         Whether the input was computed using `rfft`.
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
+    cache_intermediates: bool
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
 
     Returns
     -------
@@ -75,6 +82,7 @@ def fourier_shift_dft_2d(
         image_shape=image_shape,
         rfft=rfft,
         fftshift=fftshifted,
+        cache_intermediates=cache_intermediates,
     )
     return dft * phase_shifts
 
@@ -85,6 +93,7 @@ def fourier_shift_dft_3d(
     shifts: torch.Tensor,
     rfft: bool = False,
     fftshifted: bool = False,
+    cache_intermediates: bool = False,
 ):
     """Apply phase shifts to 3D discrete Fourier transforms.
 
@@ -100,7 +109,9 @@ def fourier_shift_dft_3d(
         Whether the input was computed using `rfft`.
     fftshifted: bool
         Whether the DFTs have been fftshifted to center the DC component.
-
+    cache_intermediates: bool
+        If `True`, the fftfreq_grid is cached. By default, we use an LRU cache with size=3. You can change the size of the cache by setting the environmental variable TORCH_FOURIER_SHIFT_CACHE_SIZE before importing the module.
+        
     Returns
     -------
     shifted_dfts: torch.Tensor
@@ -111,5 +122,6 @@ def fourier_shift_dft_3d(
         image_shape=image_shape,
         rfft=rfft,
         fftshift=fftshifted,
+        cache_intermediates=cache_intermediates,
     )
     return dft * phase_shifts
