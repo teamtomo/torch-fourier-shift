@@ -27,16 +27,17 @@ def fourier_shift_image_1d(image: torch.Tensor, shifts: torch.Tensor,
         `(..., w)` array of shifted images.
     """
     w = image.shape[-1]
-    image = torch.fft.rfftn(image, dim=(-1, ))
+
+    image = torch.fft.rfftn(image, dim=(-1,))
     image = fourier_shift_dft_1d(
         image,
-        image_shape=(w, ),
+        image_shape=(w,),
         shifts=shifts,
         rfft=True,
         fftshifted=False,
         cache_intermediates=cache_intermediates,
     )
-    image = torch.fft.irfftn(image, dim=(-1, ))
+    image = torch.fft.irfftn(image, dim=(-1,), s=(w,))
     return torch.real(image)
 
 
@@ -69,7 +70,7 @@ def fourier_shift_image_2d(image: torch.Tensor, shifts: torch.Tensor,
         fftshifted=False,
         cache_intermediates=cache_intermediates,
     )
-    image = torch.fft.irfftn(image, dim=(-2, -1))
+    image = torch.fft.irfftn(image, dim=(-2, -1), s=(h, w))
     return torch.real(image)
 
 
@@ -102,5 +103,5 @@ def fourier_shift_image_3d(image: torch.Tensor, shifts: torch.Tensor,
         fftshifted=False,
         cache_intermediates=cache_intermediates,
     )
-    image = torch.fft.irfftn(image, dim=(-3, -2, -1))
+    image = torch.fft.irfftn(image, dim=(-3, -2, -1), s=(d, h, w))
     return torch.real(image)

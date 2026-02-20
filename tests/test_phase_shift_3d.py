@@ -4,10 +4,12 @@ from torch_fourier_shift import fourier_shift_image_3d
 from torch_fourier_shift.phase_shift_grids import phase_shift_grid_3d
 
 
-def test_get_phase_shifts_2d_full_fft():
+def test_get_phase_shifts_3d_full_fft():
     shifts = torch.zeros(size=(1, 3))
     phase_shifts = phase_shift_grid_3d(shifts, image_shape=(2, 2, 2), rfft=False)
-    assert torch.allclose(phase_shifts, torch.ones(size=(2, 2, 2), dtype=torch.complex64))
+    assert torch.allclose(
+        phase_shifts, torch.ones(size=(2, 2, 2), dtype=torch.complex64)
+    )
 
     shifts = torch.tensor([[1, 2, 3]])
     phase_shifts = phase_shift_grid_3d(shifts, image_shape=(2, 2, 2), rfft=False)
@@ -68,3 +70,13 @@ def test_fourier_shift_image_3d():
     expected = torch.zeros((4, 4, 4))
     expected[2, 2, 3] = 1
     assert torch.allclose(shifted, expected, atol=1e-5)
+
+
+def test_fourier_shift_preserves_dimensions_3d():
+    """Test that fourier_shift_image_1d preserves input dimensions."""
+    image_3d_odd = torch.randn((127, 127, 127))
+    shifts = torch.tensor((5.0, 5.0, 5.0))
+    shifted_3d_odd = fourier_shift_image_3d(image_3d_odd, shifts)
+    assert shifted_3d_odd.shape == image_3d_odd.shape, (
+        f"3D odd: Expected {image_3d_odd.shape}, got {shifted_3d_odd.shape}"
+    )
